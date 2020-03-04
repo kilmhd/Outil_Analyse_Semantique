@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" lang="fr">
+  
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="./src/img/favicon.png" type="image/x-icon">
+  <link rel="icon" href="./src/img/favicon.png" type="img/image/x-icon.png">
+
+  <title>Outil d'Analyse Semantique - Dashboard</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="src/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="src/https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="src/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="src/css/myStyle.css" rel="stylesheet">
+
+</head>
+<body id="page-top">
+
+<!-- LOGIN-->
+
+<div class="container" id="login_page">
+
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+
+    <div class="col-xl-10 col-lg-12 col-md-9">
+
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="row">
+            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+            <div class="col-lg-6">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                </div>
+                <form class="user">
+                  <div class="form-group">
+                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox small">
+                      <input type="checkbox" class="custom-control-input" id="customCheck">
+                      <label class="custom-control-label" for="customCheck">Remember Me</label>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-user btn-block" onclick="currentToOther('login_page','wrapper')">Login</button>
+                </form>
+                <hr>
+                <div class="text-center">
+                  <button class="btn btn-primary btn-user btn-block" onclick="currentToOther('login_page','register_page')">Register</button>
+                </div>
+                <hr>
+                <div class="text-center">
+                  <button class="btn btn-primary btn-user btn-block" onclick="currentToOther('login_page','forgotpassword_page')">Forgot Password</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FORGOTPASSWORD PAGE-->
+<div class="container" id="forgotpassword_page" hidden=true>
+
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+
+    <div class="col-xl-10 col-lg-12 col-md-9">
+
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="row">
+            <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+            <div class="col-lg-6">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>
+                  <p class="mb-4">We get it, stuff happens. Just enter your email address below and we'll send you a link to reset your password!</p>
+                </div>
+                <form class="user">
+                  <div class="form-group">
+                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                  </div>
+                  <button class="btn btn-primary btn-user btn-block" onclick="currentToOther('forgotpassword_page','login_page')">Reset Password</button>
+                </form>
+                <hr>
+                <div class="text-center">
+                  <button class="btn btn-primary btn-user btn-block" onclick="currentToOther('forgotpassword_page','register_page')">Register</button>
+                </div>
+                <hr>
+                <div class="text-center">
+                  <button class="btn btn-primary btn-user btn-block" onclick="currentToOther('forgotpassword_page','login_page')">Already have an account? Login!</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- REGISTER PAGE-->
+
+  <div class="container" id="register_page" hidden=true>
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+          <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+          <div class="col-lg-7">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+              </div>
+              <form class="user">
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-user btn-block" onclick="currentToOther('register_page','login_page')">Register Account</button>
+              </form>
+              <hr>
+              <div class="text-center">
+                <button class="btn btn-primary btn-user btn-block" onclick="currentToOther('register_page','forgotpassword_page')">Forgot Password</button>
+              </div>
+              <hr>
+              <div class="text-center">
+                <button class="btn btn-primary btn-user btn-block" onclick="currentToOther('register_page','login_page')">Already have an account? Login!</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<!-- MAIN PAGE-->
+
+  <!-- Page Wrapper -->
+  <div id="wrapper" hidden=true>
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center">
+        <div class="sidebar-brand-text mx-3">LIUM <br>Le Mans Université</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Interface
+      </div>
+
+      <li class="nav-item">
+        <button id="modeButton" class="btn btn-primary" type="button" onclick="modeManager()">
+          <a class="sidebar-brand d-flex align-items-center justify-content-center">
+            <i class="fas fa-fw fa-cog"></i>
+            <span id="modeText">Stream</span>
+          </a>
+        </button>
+      </li>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+
+
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-5 my-2 my-md-0 mw-100 navbar-search" >
+            <div class="input-group" id='formUpload'>
+              <input id="fileupload" type="file" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <div class="row">
+                  <div class="col-lg-2 mb-2">
+                    <button class="btn btn-primary" type="button" onclick="transcript()">
+                      Transcription
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="col-lg-2 mb-3">
+            <div class="progress">
+              <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-1 mb-3">
+            <button class="btn btn-primary" type="button" onclick="deleteFile()">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
+          <div class="col-lg-1 mb-3">
+            <button class="btn btn-primary" type="button" onclick="nightMode()">
+              <i id="nightMode" class="fa fa-moon" aria-hidden="true"></i>
+
+            </button>
+          </div>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">User</span>
+                <img class="img-profile rounded-circle" src="./src/img/images.jpeg">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" id="settings" href="#" data-toggle="modal" data-target="#settingsModal">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Content Row -->
+          <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div id='audioClass' class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <audio id='audio' controls>Votre navigateur ne charge pas le lecteur audio</audio>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-music fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+
+            <!-- Content Column -->
+            <div class="col-lg-6 mb-4">
+                            <!-- Approach -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  
+                  <div class="row">
+                    <div class="col-lg-4 mb-4">
+                      <div class="row">
+                        <h6 class="m-0 font-weight-bold text-primary">Transcription zone</h6>
+                      </div>
+                      <div class="row">
+                        <h6 class="m-0 font-weight-bold text-primary" id="currentMode"></h6>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 mb-3">
+                      <button id='followButton' class="btn btn-primary" type="button" onclick="FollowMode()">
+                        Following Mode
+                      </button>  
+                    </div>
+
+                    <div class="col-lg-3 mb-3">
+                      <button id ='completButton' class="btn btn-primary" type="button" onclick="CompletMode()">
+                        Complet Mode
+                      </button>
+                    </div>
+
+                    <div class="col-lg-2 mb-3">
+                      <button class="btn btn-primary" type="button" onclick="CorrectionMode()">
+                        Correction
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="card-body">
+                  <div id="txt"></div>                 
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Word Cloud zone</h6>
+                </div>
+                <canvas class="card-body" id="wordtagimg">
+                   
+                </canvas>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Outil d'Analyse Sémantique</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Settings Modal-->
+    <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div class="row">
+              <div class="container my-auto">
+                <div class="card shadow mb-3">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Word Cloud zone</h6>
+                    <div id= btn-para-choice>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h6 class="m-0 font-weight-bold text-primary" id="nameModul"></h6>         
+                    <h6 class="m-0 font-weight-bold text-primary"><br>ModuleAdress</h6>         
+                    <input type="text" id="urlEdit" class="form-control"  required>      
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-secondary" id= "btn-save" type="button" data-dismiss="modal" onclick=saveSet() >Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="src/vendor/jquery/jquery.min.js"></script>
+  <script src="src/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="src/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="src/js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="src/vendor/chart.js/Chart.min.js"></script>
+
+  <!--My Script-->
+  <script type="text/javascript" src="./src/js/main.js"></script>
+  <script type="text/javascript" src="./src/js/APIFunction.js"></script>
+  <script type="text/javascript" src="./src/js/fileTraitment.js"></script>
+  <script type="text/javascript" src="./src/js/button.js"></script>
+  <script type="text/javascript" src="./src/js/toolsBox.js"></script>
+  <script type="text/javascript" src="./src/js/settings.js"></script>
+  <script type="text/javascript" src="./lib/wordcloud2/src/wordcloud2.js"></script>
+
+</body>
+
+</html>
