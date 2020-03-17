@@ -2,6 +2,8 @@ var audioPlayer = document.getElementById("audio");
 var subtitles = document.getElementById("txt");
 var element;
 var temp = [];
+var tab = [];
+var cloudTab = [];
 
 // =====================================================================================================================
 //                                      File Reader
@@ -27,6 +29,7 @@ function getInfo(xmlDoc){
         temp.push(xmlDoc[i].getElementsByTagName("Word")[j].childNodes[0].nodeValue);
     }
     syncData.push({"start": xmlDoc[i].getAttribute("stime"), "end": xmlDoc[i].getAttribute("etime"),"text": []});
+    //cloudTab = parcourirTab(tab, temp);
     syncData[i].text = temp.join(' ');
     temp = [];
   }
@@ -54,17 +57,38 @@ function deleteSubtitle(){
 
 //Zone Correction
 function createTextArea(){
-  element = document.createElement('textarea');
-  element.setAttribute("id", "correction");
-  element.setAttribute("rows", "15");
-  element.setAttribute("cols", "80");
   for (var i = 0; i < syncData.length; i++) {
-    temp = temp + syncData[i].text + " ";
+    element = document.createElement('textarea');
+    element.setAttribute("id", "correction_"+i);
+    element.setAttribute("rows", "2");
+    element.setAttribute("cols", "79");
+    element.innerHTML = syncData[i].text;
+    subtitles.appendChild(element);
   }
-  element.innerHTML = temp;
-  subtitles.appendChild(element);
 }
+
 //Suppression des éléments ajouté dans le HTML de la page concernant les mots.
 function deleteTextArea(){
-  subtitles.removeChild(document.getElementById("correction"));
+  for (var i = 0; i < syncData.length; i++) {
+    subtitles.removeChild(document.getElementById("correction_"+i));
+  }
+}
+
+
+var allFile = document.getElementById("allFile");
+
+function takeFile(list){
+  for(var i=0; i<list.length;i++){
+    check = document.createElement('input');
+    check.setAttribute("type", "checkbox");
+    check.setAttribute("id", "file_"+i);
+    check.setAttribute("name", list[i].id);
+    allFile.appendChild(check);
+
+    label = document.createElement("label");
+    label.setAttribute("for", list[i].id);
+    label.innerHTML = list[i].filename;
+    allFile.appendChild(label);    
+
+  }
 }

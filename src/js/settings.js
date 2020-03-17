@@ -3,28 +3,39 @@ function loadSettingDoc(){
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4){
             getSettings(JSON.parse(this.response));
-            update();
         }
     };
-    xhttp.open("GET",'./src/js/settings.json' ,true);
+    xhttp.open("GET",'./src/json/settings.json' ,true);
     xhttp.send();
 }
 
 function getSettings(json){
-    for (i = 0; i <json.settings.length; i++) {
-          params.push(newSet(json.settings[i]));
+    
+    for (i = 0; i <json.length; i++) {
+          params.push(newSet(json[i]));
     }
     
-    var mainSet = document.getElementById('btn-para-choice');
+    var mainSet = document.getElementById('modulList');
     var x, j;
 
     for(j=0; j<params.length; j++){
-        x = document.createElement('button');
-        x.setAttribute("id", j);
-        x.setAttribute("class", "btn btn-primary");
-        x.setAttribute('onClick', 'modifySetInfo(this)');
+        x = document.createElement('h6');
+        x.setAttribute("class", "m-0 font-weight-bold text-primary");
         x.innerHTML = params[j].name;
         mainSet.appendChild(x);
+
+        y = document.createElement('h6');
+        y.setAttribute("class", "m-0 font-weight-bold text-primary");
+        y.innerHTML = "Module Adress: ";
+        mainSet.appendChild(y);
+
+        z = document.createElement('input');
+        z.setAttribute("type", "text");
+        z.setAttribute("class", "form-control");
+        z.setAttribute("id", params[j].name);
+        z.setAttribute("value", params[j].url);
+        z.setAttribute("required", "true");
+        mainSet.appendChild(z);
     }
 }
 
@@ -44,20 +55,23 @@ function modifySetInfo(obj){
 }
 
 function saveSet(){
-    var nameEdit = document.getElementById('nameModul');
-    var urlEdit = document.getElementById('urlEdit');
+    var modulList = document.getElementById('modulList').children;
 
-    for(i=0; i<params.length; i++){
-        if(nameEdit.innerHTML == params[i].name) id = i;
+
+    for(i=2, j=0; i<modulList.length, j<params.length; i+=3, j++){
+
+        if(modulList[i].id == params[j].name) {
+            console.log(modulList[i].value)
+            params[j].url = modulList[i].value;
+        }
     }
-    params[id].url = urlEdit.value;
-    update();
-}
 
+    var data = new FormData();
+    data.append('name', '../json/settings.json');
+    data.append('content', JSON.stringify(params));
 
-function update(){
-    for(var i=0; i<params.length; i++){
-        if(params[i].name == "transcription") transcUrl = params[i].url;
-        if(params[i].name == "WordTag") wordUrl = params[i].url;
-    }
+    // AJAX CALL
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', "./src/php/fileManager.php", true);
+    xhr.send(data);
 }

@@ -6,18 +6,29 @@ var correctionMode = false;
 var syncData = [];
 var fileTranscript = false;
 
-
 function CompletMode(){
   if(followMode == true) deleteSubtitle();
 
   completMode = true;
   followMode = false;
-  var test = [['foo', 12], ['bar', 6], ['bal', 9], ['test', 65], ['mlkjhgfdsq', 10]];
+
+  document.getElementById("completButton").disabled = true;
+  document.getElementById("followButton").disabled = false;  
   
   document.getElementById("currentMode").innerHTML = "Mode Complet";
-  document.getElementById("wordtagimg").innerHTML = WordCloud(document.getElementById('wordtagimg'), { list: test } );
+  
+  if(correctionMode){
+    deleteTextArea();
+    correctionMode = false;
+  }
 
   createSubtitle("complet");
+
+  document.getElementById('wordtagimg').innerHTML = cloud;
+   
+  //document.getElementById("wordtagimg").innerHTML = cloud;
+   
+
   audioPlayer.addEventListener("timeupdate", function(e){
     syncData.forEach(function(element, index, array){
         if( audioPlayer.currentTime >= element.start && audioPlayer.currentTime <= element.end ){
@@ -32,8 +43,16 @@ function FollowMode(){
 
   completMode = false;
   followMode = true;
+
+  document.getElementById("followButton").disabled = true;
+  document.getElementById("completButton").disabled = false;
   
   document.getElementById("currentMode").innerHTML = "Mode Suivi";
+  
+  if(correctionMode){
+    deleteTextArea();
+    correctionMode = false;
+  }
 
   createSubtitle("follow");
   audioPlayer.addEventListener("timeupdate", function(e){
@@ -42,7 +61,6 @@ function FollowMode(){
             subtitles.children[index].style.background = 'white';
             subtitles.children[index].style.opacity = 1;
         }
-        //subtitles.scrollBy(0, 1);
     });
   });  
 }
@@ -50,34 +68,74 @@ function FollowMode(){
 function CorrectionMode(){
 
   if(completMode == true || followMode == true) deleteSubtitle();
-  if(correctionMode == true) deleteTextArea();
 
   correctionMode = true;
+  document.getElementById("followButton").disabled = false;
+  document.getElementById("completButton").disabled = false;
   document.getElementById("currentMode").innerHTML = "Mode Correction";
 
-  createTextArea();
+  currentToOther("correctionButton", "saveButton");
 
-  //Textearea remplis grave au fichier txt, creer un pop up avec bouton sauvegarder et croix de fermeture
-  //Voir travailler uniquement avec le fichier XML en testant la correction et la fichier de base grace à l'ID de chaque mot
-  //verif mettre span dans textarea avec id. Puis changer les id de tous les mots en cas de correction si le nombre de mot est différent.
+  createTextArea();
+}
+
+function saveCorrection(){
+
+  //enregistrer les modifs dans fichier XML avec les données de temps correspondant à chaques segments de texte
+  var XML = new XMLWriter();
+
+  XML.BeginNode("SegmentList");
+  for (var i = 0; i < syncData.length; i++) {
+      content = document.getElementById("correction_"+i).value;
+      console.log(content);
+      XML.BeginNode("SpeechSegment");
+      XML.Attrib("stime", syncData[i].start);
+      XML.Attrib("etime", syncData[i].end);
+      content = content.split(" ");
+      for(var j=0; j<content.length; j++){
+        if(content[j] != ""){
+          XML.BeginNode("Word");
+          XML.WriteString(content[j]);
+          XML.EndNode();
+        }
+      }
+      XML.EndNode();  
+  }
+  XML.EndNode();
+
+  var filename = document.getElementById('fileupload').files[0].name;
+
+  //Requete pour créer/modifier le fichier de correction
+
+  var data = new FormData();
+  data.append('name', '../correction/'+filename+'.xml');
+  data.append('content', '<?xml version="1.0" encoding="UTF-8"?>' + XML.ToString());
+
+  // AJAX CALL
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', "./src/php/fileManager.php", true);
+  xhr.send(data);
+
+  //charge le nouveau fichier
+
+  //modif le bouton correction
+  currentToOther("saveButton", "correctionButton");
+  deleteTextArea();
+  correctionMode = false;
 }
 
 //Gestionniare des mode streaming et File
 function modeManager(){
 
   if(document.getElementById('modeText').innerHTML == 'Stream'){
-    document.getElementById('audioClass').setAttribute("hidden", true);
-    document.getElementById('followButton').setAttribute("hidden", true);
-    document.getElementById('completButton').setAttribute("hidden", true);
-    document.getElementById('formUpload').setAttribute("hidden", true);
+    document.getElementById('stream').removeAttribute("hidden");
+    document.getElementById('file').setAttribute("hidden", true);
     document.getElementById('modeText').innerHTML = 'File';
 
   }
   else if(document.getElementById('modeText').innerHTML == 'File'){
-    document.getElementById('audioClass').removeAttribute("hidden");
-    document.getElementById('followButton').removeAttribute("hidden");
-    document.getElementById('completButton').removeAttribute("hidden");
-    document.getElementById('formUpload').removeAttribute("hidden");
+    document.getElementById('file').removeAttribute("hidden");
+    document.getElementById('stream').setAttribute("hidden", true);
     document.getElementById('modeText').innerHTML = 'Stream';
   }
 }

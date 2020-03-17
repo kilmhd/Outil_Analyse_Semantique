@@ -1,23 +1,33 @@
 
 var token = 'WyIxOCIsImE4OGZlNjYwNzg0ODU1NWNhMzEwYzM5ZDU1YzUwMmU4Il0.EIrwIQ.XdKVfnhd6d6UBWpjjYZLZGzrQek'
 var params = [];
-var transcUrl;
-var wordUrl;
+var cloud;
+var fileList = [];
 
 $(function(){
-    loadSettingDoc(); 
+    loadSettingDoc();  
+});
+
+$(document).ready(function () {
+  $("#checkboxList").CreateMultiCheckBox({ width: '230px', defaultText : 'Select Below', height:'250px' });
 });
 
 // =====================================================================================================================
 //                                      Delete File
 // =====================================================================================================================
 function deleteFile(){
-  var temp = document.getElementById('fileupload');
-  var fileInput = temp.files[0];
-  var fileFind = false;
-  
+  var resultat = document.getElementById("allFile").children;
+  console.log(resultat)
+
+  for(var i=0; i<resultat.length; i+=2){
+    if(document.getElementById("file_"+i).checked){
+      del(document.getElementById("file_"+i).name);
+      console.log(document.getElementById("file_"+i).name)
+    }
+  }
+
   $.ajax({
-    url: transcUrl + 'files',
+    url: params[0].url + 'files',
     type:'GET',
 
     dataType: 'json',
@@ -30,21 +40,9 @@ function deleteFile(){
     },
 
     success: function(resultat){
-      for(var i=0; i<resultat.length; i++){
-        if(modifyText(fileInput.name) == resultat[i].filename){
-          del(resultat[i].id);
-          fileFind = true;
-          break;
-        }
-      }
-      if(!fileFind){
-        console.log('DelFile: Fichier Inexistant')
-      }
+      takeFile(resultat);
     },
-    error: function(resultat){
-      console.log('DelFile: Error')
-    },
-  });
+  }); 
 }
 
 // =====================================================================================================================
@@ -56,8 +54,17 @@ function transcript(){
   var fileFind = false;
   var fileId = -1;
   
+  document.getElementById("followButton").disabled = false;
+  document.getElementById("completButton").disabled = false;
+  
+
+  $("#dynamic")
+  .css("width", 0 + "%")
+  .attr("aria-valuenow", 0)
+  .text(0 + "% Complete");
+  
   $.ajax({
-    url: transcUrl + 'files',
+    url: params[0].url + 'files',
     type:'GET',
 
     dataType: 'json',
@@ -70,28 +77,35 @@ function transcript(){
     },
 
     success: function(resultat){
-      
+      takeFile(resultat);
+            
       for(var i=0; i<resultat.length; i++){
         if(modifyText(fileInput.name) == resultat[i].filename){
           fileId = resultat[i].id;
+          filename = resultat[i].filename;
           fileFind = true;
           break;
         }
       }
-      //if(!fileFind){
-        //uploadFile(fileInput);
-        loadDoc(4123)
-        getProcess(fileId);
-        console.log('Transcript: Fichier Inexistant')
-      //} else {
-      //  loadDoc(fileId);
+      if(!fileFind){
+        uploadFile(fileInput);
         modifAudio(fileId);
-      //  console.log('Transcript: Fichier existant')
-      //}
+        console.log('Transcript: Fichier Inexistant')
+      } else {
+
+        if(document.getElementById("correctionCheck").checked == true){
+          loadFile(filename);
+          console.log('loadFile')
+        }else{
+          loadDoc(fileId);
+          console.log('loadDoc')
+        }
+        modifAudio(fileId);
+        console.log('Transcript: Fichier existant')
+      }
     },
     error: function(resultat){
       console.log('Transcript: Error')
     },
   });    
 }
-

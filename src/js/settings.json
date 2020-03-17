@@ -1,5 +1,4 @@
-{
-    "settings" : [
+[
         {
             "id":"1",
             "name":"transcription",
@@ -11,5 +10,4 @@
             "url":""
         }
     
-    ]
-}
+]
