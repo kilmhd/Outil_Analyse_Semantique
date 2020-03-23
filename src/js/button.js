@@ -6,6 +6,9 @@ var correctionMode = false;
 var syncData = [];
 var fileTranscript = false;
 
+//Fonction gérant le bouton du mode "Complet"
+//Nettoyage des balises pour éviter d'afficher les infos à la suite
+//Ajout des éléments, et event sur le lecteur audio pour le curseur
 function CompletMode(){
   if(followMode == true) deleteSubtitle();
 
@@ -23,11 +26,8 @@ function CompletMode(){
   }
 
   createSubtitle("complet");
-
-  document.getElementById('wordtagimg').innerHTML = cloud;
-   
-  //document.getElementById("wordtagimg").innerHTML = cloud;
-   
+  getWordCloud(getArrayUni(cloudTab));
+     
 
   audioPlayer.addEventListener("timeupdate", function(e){
     syncData.forEach(function(element, index, array){
@@ -38,6 +38,9 @@ function CompletMode(){
   });
 }
 
+//Fonction gérant le bouton du mode "Suivie"
+//Nettoyage des balises pour éviter d'afficher les infos à la suite
+//Ajout des éléments, et event sur le lecteur audio pour le texte
 function FollowMode(){
   if(completMode == true) deleteSubtitle();
 
@@ -53,18 +56,25 @@ function FollowMode(){
     deleteTextArea();
     correctionMode = false;
   }
-
+  var cloud = ''
   createSubtitle("follow");
+
   audioPlayer.addEventListener("timeupdate", function(e){
     syncData.forEach(function(element, index, array){
         if( audioPlayer.currentTime >= element.start && audioPlayer.currentTime <= element.end ){
             subtitles.children[index].style.background = 'white';
-            subtitles.children[index].style.opacity = 1;
+            subtitles.children[index].style.opacity = 1; 
+            cloud += cloudTab[index]
         }
     });
-  });  
+  }); 
+
+  audioPlayer.addEventListener("timeupdate", function(){
+    setInterval(getWordCloud(cloud), 10000)})
 }
 
+//Gestion du mode Correction
+// Creation des texte area pour la correction
 function CorrectionMode(){
 
   if(completMode == true || followMode == true) deleteSubtitle();
@@ -79,6 +89,7 @@ function CorrectionMode(){
   createTextArea();
 }
 
+//Fonction permettant de sauvegarder la correction
 function saveCorrection(){
 
   //enregistrer les modifs dans fichier XML avec les données de temps correspondant à chaques segments de texte
@@ -142,18 +153,9 @@ function modeManager(){
 
 
 
-//LOG BUTTONS
+//Function permettant de switch entre les différentes pages
 function currentToOther(pageA, pageB){
   document.getElementById(pageA).setAttribute("hidden", true);
   document.getElementById(pageB).removeAttribute("hidden");
 }
 
-function nightMode(){
-  if(document.getElementById('nightMode').className == "fa fa-moon"){
-    document.getElementById('nightMode').className="fa fa-sun";
-  }
-  else if(document.getElementById('nightMode').className == "fa fa-sun"){
-    document.getElementById('nightMode').className="fa fa-moon";
-  }
-
-}

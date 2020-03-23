@@ -43,9 +43,6 @@ function uploadFile(fileInput){
         }, 2500);
 
       },
-      error: function(resultat){
-        console.log('Upload: Error')
-      },
     });
 }
 
@@ -68,12 +65,8 @@ function del(fileId){
         },
     
         success: function(resultat){
-          console.log('Del: Success')
           alert("Le fichier à bien été supprimé !")
 
-        },
-        error: function(resultat){
-          console.log('Del: Error \n id: '+fileId)
         },
       });
 }
@@ -99,11 +92,8 @@ function loadDoc(fileId) {
       success: function(resultat){
         console.log('loadDoc: Success')
         console.log(resultat)
-        //wordList = xmlToTxt(resultat);
       },
       error: function(resultat){
-        //console.log(resultat)
-        console.log('loadDoc: Error')
         $("#dynamic")
             .css("width", 100 + "%")
             .attr("aria-valuenow", 100)
@@ -114,7 +104,7 @@ function loadDoc(fileId) {
   }
 
   // =====================================================================================================================
-//                                      Get Transcription File (On Server)
+//                                      Get Transcription local
 // =====================================================================================================================
 
 function loadFile(filename) {
@@ -132,13 +122,9 @@ function loadFile(filename) {
     },
 
     success: function(resultat){
-      console.log('loadDoc: Success')
       console.log(resultat)
-      //wordList = xmlToTxt(resultat);
     },
     error: function(resultat){
-      //console.log(resultat)
-      console.log('loadDoc: Error')
       $("#dynamic")
           .css("width", 100 + "%")
           .attr("aria-valuenow", 100)
@@ -152,29 +138,19 @@ function loadFile(filename) {
 //                                      Change audio file
 // =====================================================================================================================
 
-function modifAudio(fileId) {
+function modifAudio(file) {
   
-  $.ajax({
-    url: params[0].url + 'download/'+ fileId,
-    type:'GET',
+  var data = new FormData();
+  data.append('name', file.name);
+  data.append('file', file);
 
-    dataType: 'json',
-    processData: false,
-    contentType: false,
-
-    headers: {
-      "Authentication-Token": token,
-    },
-
-    success: function(resultat){
-      console.log('ModifA: Success')
-      document.getElementById('audio').src = resultat.filename;
-      console.log(resultat)
-    },
-    error: function(resultat){
-      console.log('ModifA: Error')
-    }
-  }); 
+  // AJAX CALL
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', "./src/php/copyFile.php", true);
+  xhr.send(data);
+      
+  document.getElementById('audio').src = "./src/audio/"+file.name+".mp3";
+ 
 }
 
 // =====================================================================================================================
@@ -194,13 +170,35 @@ function getProcess(fileId) {
       console.log('Progress: Success')
       modifprogressValue(resultat.progress);
     },
-    error: function(resultat){
-      console.log('Progress: Error')
-      
-    }
   }); 
 }
 
 function modifprogressValue(value){
     progress = value
+}
+
+// =====================================================================================================================
+//                                      Get wordCLoud
+// =====================================================================================================================
+
+function getWordCloud(list) {
+
+  $.ajax({
+    url: params[1].url,
+    type:'POST',
+    contentType: 'application/json',
+    dataType : 'json',
+    data: JSON.stringify({"myList": list}),
+    
+    
+    headers: {
+    },
+
+    success: function(resultat){
+      console.log('wordCLoud: Success')
+    },
+    error: function(resultat){ 
+      document.getElementById("twinImg").setAttribute('src', 'data:image/png;base64,' + resultat.responseText);
+    }
+  }); 
 }

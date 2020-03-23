@@ -4,45 +4,32 @@ var params = [];
 var cloud;
 var fileList = [];
 
+
 $(function(){
-    loadSettingDoc();  
+    loadSettingDoc(); 
 });
 
-$(document).ready(function () {
-  $("#checkboxList").CreateMultiCheckBox({ width: '230px', defaultText : 'Select Below', height:'250px' });
-});
+function main(){
+    currentToOther('login_page','wrapper')
+    loadSettingDoc();
+    takeServerFile();
+}
+
+
 
 // =====================================================================================================================
 //                                      Delete File
 // =====================================================================================================================
-function deleteFile(){
-  var resultat = document.getElementById("allFile").children;
-  console.log(resultat)
+function deleteServerFile(){
+  var resultatServer = document.getElementById("allServerFile").children;
 
-  for(var i=0; i<resultat.length; i+=2){
+  for(var i=0; i<resultatServer.length; i+=2){
     if(document.getElementById("file_"+i).checked){
       del(document.getElementById("file_"+i).name);
       console.log(document.getElementById("file_"+i).name)
     }
   }
-
-  $.ajax({
-    url: params[0].url + 'files',
-    type:'GET',
-
-    dataType: 'json',
-    enctype: 'application/json',
-    processData: false,
-    contentType: false,
-
-    headers: {
-      "Authentication-Token": token,
-    },
-
-    success: function(resultat){
-      takeFile(resultat);
-    },
-  }); 
+  takeServerFile();
 }
 
 // =====================================================================================================================
@@ -76,9 +63,8 @@ function transcript(){
       "Authentication-Token": token,
     },
 
-    success: function(resultat){
-      takeFile(resultat);
-            
+    success: function(resultat){  
+      takeServerFile();          
       for(var i=0; i<resultat.length; i++){
         if(modifyText(fileInput.name) == resultat[i].filename){
           fileId = resultat[i].id;
@@ -89,23 +75,55 @@ function transcript(){
       }
       if(!fileFind){
         uploadFile(fileInput);
-        modifAudio(fileId);
-        console.log('Transcript: Fichier Inexistant')
+        modifAudio(fileInput);
       } else {
 
         if(document.getElementById("correctionCheck").checked == true){
           loadFile(filename);
-          console.log('loadFile')
         }else{
           loadDoc(fileId);
-          console.log('loadDoc')
         }
-        modifAudio(fileId);
-        console.log('Transcript: Fichier existant')
+        modifAudio(fileInput);
       }
     },
-    error: function(resultat){
-      console.log('Transcript: Error')
-    },
   });    
+}
+
+// =====================================================================================================================
+//                                      Transcript File
+// =====================================================================================================================
+function takeServerFile(){
+  
+  $.ajax({
+    url: params[0].url + 'files',
+    type:'GET',
+
+    dataType: 'json',
+    enctype: 'application/json',
+    processData: false,
+    contentType: false,
+
+    headers: {
+      "Authentication-Token": token,
+    },
+
+    success: function(resultat){
+  
+      var allFile = document.getElementById("allServerFile");
+      for(var i=0; i<resultat.length;i++){
+        check = document.createElement('input');
+        check.setAttribute("type", "checkbox");
+        check.setAttribute("id", "file_"+i);
+        check.setAttribute("name", resultat[i].id);
+        allFile.appendChild(check);
+    
+        label = document.createElement("label");
+        label.setAttribute("for", resultat[i].id);
+        label.innerHTML = resultat[i].filename;
+        allFile.appendChild(label);    
+      }
+    },
+  }); 
+  
+  
 }

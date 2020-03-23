@@ -29,7 +29,7 @@ function getInfo(xmlDoc){
         temp.push(xmlDoc[i].getElementsByTagName("Word")[j].childNodes[0].nodeValue);
     }
     syncData.push({"start": xmlDoc[i].getAttribute("stime"), "end": xmlDoc[i].getAttribute("etime"),"text": []});
-    //cloudTab = parcourirTab(tab, temp);
+    cloudTab[i] = temp
     syncData[i].text = temp.join(' ');
     temp = [];
   }
@@ -71,24 +71,5 @@ function createTextArea(){
 function deleteTextArea(){
   for (var i = 0; i < syncData.length; i++) {
     subtitles.removeChild(document.getElementById("correction_"+i));
-  }
-}
-
-
-var allFile = document.getElementById("allFile");
-
-function takeFile(list){
-  for(var i=0; i<list.length;i++){
-    check = document.createElement('input');
-    check.setAttribute("type", "checkbox");
-    check.setAttribute("id", "file_"+i);
-    check.setAttribute("name", list[i].id);
-    allFile.appendChild(check);
-
-    label = document.createElement("label");
-    label.setAttribute("for", list[i].id);
-    label.innerHTML = list[i].filename;
-    allFile.appendChild(label);    
-
   }
 }

@@ -8,5 +8,4 @@ function updateFile($name, $content){
 }
 // PUT THE POST VARIABLES IN
 $pass = updateFile($_POST['name'], $_POST['content']);
-
 ?>
