@@ -5,9 +5,7 @@ var cloud;
 var fileList = [];
 
 
-$(function(){
-    loadSettingDoc(); 
-});
+
 
 function main(){
     currentToOther('login_page','wrapper')
@@ -95,7 +93,7 @@ function transcript(){
 function takeServerFile(){
   
   $.ajax({
-    url: params[0].url + 'files',
+    url: 'http://lst-demo.univ-lemans.fr:8000/api/v1.1/files',
     type:'GET',
 
     dataType: 'json',
