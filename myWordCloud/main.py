@@ -17,7 +17,7 @@ def add_headers(response):
     response.headers.add('myList',[])
     return response
 
-@app.route('/api/v1/wordCloud', methods=['POST', 'GET'])
+@app.route('/Groupe4/myWordCloud/', methods=['POST', 'GET'])
 def api_myList():
     data = request.get_json()
     
