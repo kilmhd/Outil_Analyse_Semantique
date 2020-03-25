@@ -11,6 +11,7 @@ var fileList = [];
 //Les élément fléché (<-) pourront être supprimé après l'ajout du système de login
 
 function main(){
+    params = [];
     if(document.getElementById('tokenInput').value != ''){ //<-
       token = document.getElementById('tokenInput').value; //<-
       currentToOther('login_page','wrapper') //<--

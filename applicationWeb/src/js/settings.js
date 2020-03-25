@@ -10,7 +10,8 @@ function loadSettingDoc(){
 }
 
 function getSettings(json){
-    
+    params = []
+    console.log(json)
     for (i = 0; i <json.length; i++) {
           params.push(newSet(json[i]));
     }
@@ -21,11 +22,13 @@ function getSettings(json){
     for(j=0; j<params.length; j++){
         x = document.createElement('h6');
         x.setAttribute("class", "m-0 font-weight-bold text-primary");
+        x.setAttribute("id", "name_" + params[j].name);
         x.innerHTML = params[j].name;
         mainSet.appendChild(x);
 
         y = document.createElement('h6');
         y.setAttribute("class", "m-0 font-weight-bold text-primary");
+        y.setAttribute("id", "Mod_"+params[j].name);
         y.innerHTML = "Module Adress: ";
         mainSet.appendChild(y);
 
@@ -44,16 +47,6 @@ function newSet(para){
     return { "id": para.id,"name": para.name,"url": para.url }
 }
 
-// modify currents settings
-function modifySetInfo(obj){
-  var nameEdit = document.getElementById('nameModul');
-  var urlEdit = document.getElementById('urlEdit');
-
-  nameEdit.innerHTML = params[obj.id].name;
-  urlEdit.value = params[obj.id].url; 
-  
-}
-
 function saveSet(){
     var modulList = document.getElementById('modulList').children;
 
@@ -61,7 +54,6 @@ function saveSet(){
     for(i=2, j=0; i<modulList.length, j<params.length; i+=3, j++){
 
         if(modulList[i].id == params[j].name) {
-            console.log(modulList[i].value)
             params[j].url = modulList[i].value;
         }
     }
@@ -74,4 +66,14 @@ function saveSet(){
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "./src/php/fileManager.php", true);
     xhr.send(data);
+
+
+    setting = document.getElementById('modulList');
+    for (var i = 0; i < setting.children.length; i++) {
+        setting.removeChild(document.getElementById(params[i].name));
+        setting.removeChild(document.getElementById("Mod_"+params[i].name));
+        setting.removeChild(document.getElementById("name_" + params[i].name));
+    }
+
+    loadSettingDoc()
 }
