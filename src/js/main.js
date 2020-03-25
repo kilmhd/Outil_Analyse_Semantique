@@ -1,16 +1,22 @@
 
-var token = 'WyIxOCIsImE4OGZlNjYwNzg0ODU1NWNhMzEwYzM5ZDU1YzUwMmU4Il0.EIrwIQ.XdKVfnhd6d6UBWpjjYZLZGzrQek'
+var mytoken = 'WyIxOCIsImE4OGZlNjYwNzg0ODU1NWNhMzEwYzM5ZDU1YzUwMmU4Il0.EIrwIQ.XdKVfnhd6d6UBWpjjYZLZGzrQek'
+var token = ''
 var params = [];
 var cloud;
 var fileList = [];
 
 
-
+//Fonction prinicpale permettant le chargement des paramêtre aisin que des fichier de l'utilisateur qui sont sur le serveur
+//Récupération du Token 
+//Les élément fléché (<-) pourront être supprimé après l'ajout du système de login
 
 function main(){
-    currentToOther('login_page','wrapper')
-    loadSettingDoc();
-    takeServerFile();
+    if(document.getElementById('tokenInput').value != ''){ //<-
+      token = document.getElementById('tokenInput').value; //<-
+      currentToOther('login_page','wrapper') //<--
+      loadSettingDoc();
+      takeServerFile();
+    }
 }
 
 
@@ -91,6 +97,12 @@ function transcript(){
 //                                      Transcript File
 // =====================================================================================================================
 function takeServerFile(){
+  var allFile = document.getElementById("allServerFile");
+  
+  for (var i = 0; i < allFile.children.length; i++) {
+    allFile.removeChild(document.getElementById("file_" + i));
+    allFile.removeChild(document.getElementById("fileID_" + i));
+  }
   
   $.ajax({
     url: 'http://lst-demo.univ-lemans.fr:8000/api/v1.1/files',
@@ -107,7 +119,7 @@ function takeServerFile(){
 
     success: function(resultat){
   
-      var allFile = document.getElementById("allServerFile");
+      
       for(var i=0; i<resultat.length;i++){
         check = document.createElement('input');
         check.setAttribute("type", "checkbox");
@@ -117,6 +129,7 @@ function takeServerFile(){
     
         label = document.createElement("label");
         label.setAttribute("for", resultat[i].id);
+        label.setAttribute("id", "fileID_"+i);
         label.innerHTML = resultat[i].filename;
         allFile.appendChild(label);    
       }
