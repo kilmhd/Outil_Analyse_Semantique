@@ -1,0 +1,10 @@
+#txt{
+    height: 10cm;
+    overflow: auto;
+}
+
+.progress {
+    margin: 10px;
+    width: 200px;
+}
+
