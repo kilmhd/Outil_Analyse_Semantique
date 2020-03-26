@@ -41,6 +41,9 @@ function deleteServerFile(){
 //                                      Transcript File
 // =====================================================================================================================
 function transcript(){
+
+  deleteSubtitle();
+  
   var temp = document.getElementById('fileupload');
   var fileInput = temp.files[0];
   var fileFind = false;
