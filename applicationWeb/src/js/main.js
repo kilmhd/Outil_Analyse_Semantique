@@ -25,7 +25,7 @@ function main(){
 // =====================================================================================================================
 //                                      Delete File
 // =====================================================================================================================
-function deleteServerFile(){
+function deleteFile(){
   var resultatServer = document.getElementById("allServerFile").children;
 
   for(var i=0; i<resultatServer.length; i+=2){
@@ -82,8 +82,9 @@ function transcript(){
         }
       }
       if(!fileFind){
-        uploadFile(fileInput);
         modifAudio(fileInput);
+        uploadFile(fileInput);
+        
       } else {
 
         if(document.getElementById("correctionCheck").checked == true){

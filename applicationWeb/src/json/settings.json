@@ -1,1 +1,1 @@
-[{"id":"1","name":"transcription","url":"http://lst-demo.univ-lemans.fr:8000/api/v1.1/"},{"id":"2","name":"WordTag","url":"http://127.0.0.1:5000/2"}]
+[{"id":"1","name":"transcription","url":"http://lst-demo.univ-lemans.fr:8000/api/v1.1/"},{"id":"2","name":"WordTag","url":"http://127.0.0.1:5000/api/v1/myWordCloud/"}]

@@ -90,8 +90,6 @@ function loadDoc(fileId) {
       },
   
       success: function(resultat){
-        console.log('loadDoc: Success')
-        console.log(resultat)
       },
       error: function(resultat){
         $("#dynamic")
@@ -167,7 +165,6 @@ function getProcess(fileId) {
     },
 
     success: function(resultat){
-      console.log('Progress: Success')
       modifprogressValue(resultat.progress);
     },
   }); 
