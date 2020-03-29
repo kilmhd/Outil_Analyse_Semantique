@@ -24,6 +24,5 @@ Ce service web doit permettre de:
 <p>Nathalie CAMELIN</p>
 <p>Antoine LAURENT</p>
 
-__GITHUB de l'application web__ -> https://github.com/kilmhd/Outil_Analyse_Semantique </br>
-__GITHUB du Nuage de mot__ -> https://github.com/kilmhd/myWordCloud
+__GITHUB du projet__ -> https://github.com/kilmhd/Outil_Analyse_Semantique </br>
 
