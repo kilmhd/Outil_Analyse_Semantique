@@ -25,8 +25,6 @@ function uploadFile(fileInput){
       },
 
       success: function(resultat){
-        console.log('Upload: success')
-        console.log(resultat)
         var processId = resultat.processes[0].id;
         
         var interval = setInterval(function() {

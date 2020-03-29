@@ -26,12 +26,13 @@ function main(){
 //                                      Delete File
 // =====================================================================================================================
 function deleteFile(){
-  var resultatServer = document.getElementById("allServerFile").children;
+  var resultatServer = document.getElementById("allServerFile");
 
-  for(var i=0; i<resultatServer.length; i+=2){
+  for(var i=0; i<resultatServer.children.length; i+=2){
     if(document.getElementById("file_"+i).checked){
       del(document.getElementById("file_"+i).name);
-      console.log(document.getElementById("file_"+i).name)
+      resultatServer.removeChild(document.getElementById("file_"+i));
+      resultatServer.removeChild(document.getElementById("fileID_"+i));
     }
   }
   takeServerFile();
@@ -88,9 +89,9 @@ function transcript(){
       } else {
 
         if(document.getElementById("correctionCheck").checked == true){
-          loadFile(filename);
+          loadFile(filename); //Chargement du fichier de correction
         }else{
-          loadDoc(fileId);
+          loadDoc(fileId); //Chargement du fichier sur le serveur distant
         }
         modifAudio(fileInput);
       }

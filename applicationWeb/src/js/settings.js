@@ -11,7 +11,6 @@ function loadSettingDoc(){
 
 function getSettings(json){
     params = []
-    console.log(json)
     for (i = 0; i <json.length; i++) {
           params.push(newSet(json[i]));
     }
