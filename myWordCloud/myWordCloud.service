@@ -1,0 +1,13 @@
+[Unit]
+Descritpion= Gunicorn instance to serve myWordCloud
+After=network.target
+
+[Service]
+User=m1stage
+Group=www-data
+WorkingDirectory=/home/m1stage/Outil_Analyse_Sémantique/Outil_Analyse_Semantique/myWordCloud
+Environment="PATH=/home/m1stage/Outil_Analyse_Sémantique/Outil_Analyse_Semantique/myWordCloud/bin"
+ExecStart=/home/m1stage/Outil_Analyse_Sémantique/Outil_Analyse_Semantique/myWordCloud/bin/gunicorn --bind 0.0.0.0:5000 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
